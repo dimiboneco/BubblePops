@@ -901,6 +901,7 @@ MonoBehaviour:
   InitialPlayerPosition: {fileID: 612279650}
   NextPlayerPosition: {fileID: 1348062739}
   Rulehandler: {fileID: 1430884384}
+  uihandler: {fileID: 1050393660}
 --- !u!1 &956481101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1795,6 +1796,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RuleHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 4079116436038396576, guid: c9a1f7835a8376545b280f4aefb49006,
+        type: 3}
+      propertyPath: uiHandler
+      value: 
+      objectReference: {fileID: 1050393660}
     - target: {fileID: 4079116436038396577, guid: c9a1f7835a8376545b280f4aefb49006,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1850,11 +1856,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4079116436038396576, guid: c9a1f7835a8376545b280f4aefb49006,
-        type: 3}
-      propertyPath: uiHandler
-      value: 
-      objectReference: {fileID: 1050393660}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9a1f7835a8376545b280f4aefb49006, type: 3}
 --- !u!1001 &5470854643477843248

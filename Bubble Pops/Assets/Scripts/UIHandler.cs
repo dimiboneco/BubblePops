@@ -10,9 +10,9 @@ public class UIHandler : MonoBehaviour
     public Text scoreText;
     public RuleHandler ruleHandler;
 
-    public void UpdateScore(Bubble bubble)
+    public void Score(int number)
     {
-        score = bubble.scorecounter;
+        score +=number*5 ;
         scoreText.text = "Score: " + score;
     }
 

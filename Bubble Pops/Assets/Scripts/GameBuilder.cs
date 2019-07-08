@@ -14,6 +14,7 @@ public class GameBuilder : MonoBehaviour
     private Bubble playerBubble;
     private Bubble nextPlayerBubble;
     private bool isIndented;
+    public UIHandler uihandler;
 
     public void BuildPlayerBubbles()
     {
@@ -39,7 +40,6 @@ public class GameBuilder : MonoBehaviour
 
                 var currentBubble = SpawnBubble(InitialBubblePosition.position + myVector, myNumbers[j]);
                 BubbleList.Add(currentBubble);
-                currentBubble.CheckForCeiling(currentBubble);
             }
         }
     }
@@ -48,7 +48,7 @@ public class GameBuilder : MonoBehaviour
     {
         var myGameObject = Instantiate(BubblePrefab, position, Quaternion.identity);
         var currentBubble = myGameObject.GetComponent<Bubble>();
-        currentBubble.Initialize(number, colorMapper.MatchNumberToColor(number));
+        currentBubble.Initialize(number, colorMapper.MatchNumberToColor(number), uihandler);
         return currentBubble; 
     }
 

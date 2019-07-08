@@ -15,9 +15,11 @@ public class Bubble : MonoBehaviour
     public AudioClip blinkCLip;
     public GameObject bubbleExplosion;
     public int scorecounter=0;
+    private UIHandler uihandler;
 
-    public void Initialize(int number, Color color)
+    public void Initialize(int number, Color color, UIHandler uihandler)
     {
+        this.uihandler = uihandler;
         this.number = number;
         spriteRenderer.color = color;
         numberText.text = number.ToString();
@@ -33,26 +35,22 @@ public class Bubble : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.GetComponent<Bubble>() == null || collision.gameObject.layer !=8)
+        if(collision.gameObject.GetComponent<Bubble>() == null || gameObject.layer !=8)
         {
             return;
         }
 
-        collision.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-        collision.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        collision.gameObject.GetComponent<Rigidbody2D>().angularVelocity = 0f;
-        collision.gameObject.layer = 0;
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        GetComponent<Rigidbody2D>().angularVelocity = 0f;
+        gameObject.layer = 0;
 
-        if (collision.gameObject.GetComponent<Bubble>().number == number)
+        var neighbours= collision.gameObject.GetComponent<Bubble>().GetNeighbours().Where(c=>c.number == number);
+
+        if (neighbours.Count() >1)
         {
-            var collidedObject = collision.gameObject.GetComponent<Bubble>();
-            var otherCollidedObject = collision.otherCollider.gameObject.GetComponent<Bubble>();
-            collisionList.Add(otherCollidedObject);
-            collisionList.Add(collidedObject);
-            Merge(collisionList);
-            collisionList.Clear();
-            scorecounter += 5;
-            CheckForCeiling(collidedObject);
+            Merge(neighbours.ToList());
+            uihandler.Score(neighbours.Count());
         }
     }
 
@@ -87,8 +85,13 @@ public class Bubble : MonoBehaviour
     {
         if (newNumber >= 2048)
         {
-            Destroy(this.gameObject);
             Instantiate(bubbleExplosion, transform.position, Quaternion.identity);
+            var neighbourstodestroy = GetNeighbours();
+            foreach (var n in neighbourstodestroy)
+            {
+                Destroy(n);
+            }
+            Destroy(this.gameObject);
         }
         else
         {
@@ -99,23 +102,10 @@ public class Bubble : MonoBehaviour
         }
     }
 
-    public void CheckForCeiling(Bubble bubble)
+    public List<Bubble> GetNeighbours ()
     {
-        RaycastHit2D ceilingRaycast = Physics2D.Raycast(transform.position, Vector2.up, 1.5f);
-        if (ceilingRaycast.collider != null)
-        {
-            
-        }
-        else
-        {
-            Debug.Log("I must fall");
-            bubble.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
-            bubble.GetComponent<Rigidbody2D>().gravityScale = 1f;
-        }
-    }
-
-    public void CheckForNeighbours (Bubble bubble)
-    {
-        
+        var neighbourList = new List<Bubble>();
+        var colliders = Physics2D.OverlapCircleAll(transform.position, 0.9f);
+        return colliders.Where(c => c.GetComponent<Bubble>() != null).Select(c => c.GetComponent<Bubble>()).ToList();
     }
 }

@@ -232,7 +232,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &8545914667051734882
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -270,8 +270,6 @@ MonoBehaviour:
   bubbleExplosion: {fileID: 2487757661563988512, guid: 0fd5cbf347501fb49b6c38a34ee56bfc,
     type: 3}
   scorecounter: 0
-  uIHandler: {fileID: 5470854642580631820, guid: fa47eecc4dc371348875a95fc126c200,
-    type: 3}
 --- !u!1 &8545914668545328230
 GameObject:
   m_ObjectHideFlags: 0
