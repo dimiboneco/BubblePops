@@ -8,7 +8,8 @@ public class UIHandler : MonoBehaviour
 {
     public int score = 0;
     public Text scoreText;
-    public RuleHandler ruleHandler;
+    public Text perfectText;
+    public RowGenerator rowGenerator;
 
     public void Score(int number)
     {

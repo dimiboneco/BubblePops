@@ -9,7 +9,7 @@ public class GameBuilder : MonoBehaviour
     public Transform InitialBubblePosition;
     public Transform InitialPlayerPosition;
     public Transform NextPlayerPosition;
-    public RuleHandler Rulehandler;
+    public RowGenerator rowGenerator;
     private List<Bubble> BubbleList = new List<Bubble>();
     private Bubble playerBubble;
     private Bubble nextPlayerBubble;
@@ -18,9 +18,9 @@ public class GameBuilder : MonoBehaviour
 
     public void BuildPlayerBubbles()
     {
-        playerBubble = SpawnBubble(InitialPlayerPosition.position, Rulehandler.GenerateOne());
+        playerBubble = SpawnBubble(InitialPlayerPosition.position, rowGenerator.GenerateOne());
         playerBubble.gameObject.layer = 8;
-        nextPlayerBubble = SpawnBubble(NextPlayerPosition.position, Rulehandler.GenerateOne());
+        nextPlayerBubble = SpawnBubble(NextPlayerPosition.position, rowGenerator.GenerateOne());
         nextPlayerBubble.gameObject.layer = 8;
     }
 
@@ -28,7 +28,7 @@ public class GameBuilder : MonoBehaviour
     {
         for (int i=0; i<y; i++)
         {
-            var myNumbers= Rulehandler.GenerateRow(x);
+            var myNumbers= rowGenerator.GenerateRow(x);
             isIndented = !isIndented;
             for (int j=0; j<x; j++)
             {
@@ -50,6 +50,15 @@ public class GameBuilder : MonoBehaviour
         var currentBubble = myGameObject.GetComponent<Bubble>();
         currentBubble.Initialize(number, colorMapper.MatchNumberToColor(number), uihandler);
         return currentBubble; 
+    }
+
+    public void PushAndGenerateRow()
+    {
+        if(uihandler.score >200)
+        {
+            PushRow();
+            GenerateNewRow();
+        }
     }
 
     public void PushRow()
@@ -81,7 +90,15 @@ public class GameBuilder : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
         nextPlayerBubble.transform.position = InitialPlayerPosition.transform.position;
         playerBubble = nextPlayerBubble;
-        nextPlayerBubble = SpawnBubble(NextPlayerPosition.position, Rulehandler.GenerateOne());
+        nextPlayerBubble = SpawnBubble(NextPlayerPosition.position, rowGenerator.GenerateOne());
         nextPlayerBubble.gameObject.layer = 8;
+    }
+
+    public void CheckForEmptyBoard()
+    {
+        if (BubbleList.Count == 0)
+        {
+            uihandler.perfectText.gameObject.SetActive(true);
+        }
     }
 }

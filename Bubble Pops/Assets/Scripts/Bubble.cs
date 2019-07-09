@@ -14,7 +14,6 @@ public class Bubble : MonoBehaviour
     private List<Bubble> collisionList = new List<Bubble>();
     public AudioClip blinkCLip;
     public GameObject bubbleExplosion;
-    public int scorecounter=0;
     private UIHandler uihandler;
 
     public void Initialize(int number, Color color, UIHandler uihandler)
@@ -46,6 +45,8 @@ public class Bubble : MonoBehaviour
         gameObject.layer = 0;
 
         var neighbours= collision.gameObject.GetComponent<Bubble>().GetNeighbours().Where(c=>c.number == number);
+        var otherCollidedObject = collision.otherCollider.gameObject.GetComponent<Bubble>();
+        neighbours.ToList().Add(otherCollidedObject);
 
         if (neighbours.Count() >1)
         {
@@ -57,11 +58,11 @@ public class Bubble : MonoBehaviour
     public void Merge(List<Bubble> MergeList)
     {
         var targetNumber = CalculatePower(MergeList);
-        for (var i = 1; i < MergeList.Count; i++)
+        for (var i = 0; i < MergeList.Count-1; i++)
         {
             MergeList[i].Destroy();
         }
-        MergeList[0].UpdateAfterMerge(targetNumber);
+        MergeList[MergeList.Count - 1].UpdateAfterMerge(targetNumber);
     }
 
     private int CalculatePower(List<Bubble> bubbles)
@@ -89,7 +90,7 @@ public class Bubble : MonoBehaviour
             var neighbourstodestroy = GetNeighbours();
             foreach (var n in neighbourstodestroy)
             {
-                Destroy(n);
+                Destroy(n.transform.gameObject);
             }
             Destroy(this.gameObject);
         }
@@ -105,7 +106,7 @@ public class Bubble : MonoBehaviour
     public List<Bubble> GetNeighbours ()
     {
         var neighbourList = new List<Bubble>();
-        var colliders = Physics2D.OverlapCircleAll(transform.position, 0.9f);
+        var colliders = Physics2D.OverlapCircleAll(transform.position, 0.8f);
         return colliders.Where(c => c.GetComponent<Bubble>() != null).Select(c => c.GetComponent<Bubble>()).ToList();
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuleHandler : MonoBehaviour
+public class RowGenerator : MonoBehaviour
 {
     public int[] GenerateRow(int size)
     {

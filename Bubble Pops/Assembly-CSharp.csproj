@@ -67,7 +67,7 @@
     <Compile Include="Assets\Scripts\GameHandler.cs" />
     <Compile Include="Assets\Scripts\InteractionHandler.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
-    <Compile Include="Assets\Scripts\RuleHandler.cs" />
+    <Compile Include="Assets\Scripts\RowGenerator.cs" />
     <Compile Include="Assets\Scripts\UIHandler.cs" />
     <None Include="Assets\sumPause\README.md.txt" />
     <None Include="Assets\Fonts\Jupiter\LICENSE.txt" />

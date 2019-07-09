@@ -11,7 +11,13 @@ public class GameHandler : MonoBehaviour
     private void Start()
     {
         uiHandler.score = 0;
+        uiHandler.perfectText.gameObject.SetActive(false);
         Gamebuilder.BuildBubbles(6, 8);
         Gamebuilder.BuildPlayerBubbles();
+    }
+
+    private void Update()
+    {
+        Gamebuilder.CheckForEmptyBoard();
     }
 }
