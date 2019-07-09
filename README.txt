@@ -6,7 +6,7 @@ If two bubbles with number 1024 merge, the neighbour bubbles are also destroyed.
 A start menu is available.
 The following buttons are available: pause, resume and restart the game.
 A touch input is implemented.
-An explosion animation occurs if 2 bubbles with number 1024 merge, destroying both bubbles.
+An explosion animation occurs if 2 bubbles with number 1024 merge, destroying their neighbour bubbles.
 A background music and a short sound clip that plays during merging are added.
 Score
 When the board is cleared, the message "PERFECT!!!" appears.
